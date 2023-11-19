@@ -23,7 +23,6 @@ class DioClient {
     dio = dioC ?? Dio();
     Map<String, String> headerMap = {
       'Content-Type': 'application/json; charset=UTF-8',
-      "user-agent":"test"
     };
     if (token!.isNotEmpty) {
       headerMap.addAll({'Authorization': 'Bearer $token'});

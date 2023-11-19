@@ -90,11 +90,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        "Balance:",
+                                        "Balance: ",
                                         style: latoStyle700Bold,
                                       ),
                                       Text(
-                                        "${provider.balance.totalDeposit}",
+                                       "${provider.balance.totalDeposit}",
                                         style: latoStyle700Bold,
                                       )
                                     ],

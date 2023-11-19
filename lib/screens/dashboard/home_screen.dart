@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<HomePageProvider>(context, listen: false).getOffer(SimName.Airtel.name);
-        Provider.of<HomePageProvider>(context, listen: false).getBalance();
+      Provider.of<HomePageProvider>(context, listen: false).getBalance();
     });
 
     super.initState();
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "Balance:",
+                                    "Balance: ",
                                     style: latoStyle700Bold,
                                   ),
                                   Text(
@@ -194,26 +194,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             ),
-           
-           provider.isLoading?Center(child: CircularProgressIndicator()):
-            provider.index==0?
-            Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20),
-              child: airtelOffer(provider,(){}),
-            ):     provider.index==1? Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20),
-              child: grameenPhoneOffer(provider,(){}),
-            ): provider.index==2?Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20),
-              child:banglalinkOffer(provider,(){}),
-            ):Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20),
-              child:robiOffer(provider,(){}),
-            )
+            provider.isLoading
+                ? Center(child: CircularProgressIndicator())
+                : provider.index == 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: airtelOffer(provider, () {}),
+                      )
+                    : provider.index == 1
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: grameenPhoneOffer(provider, () {}),
+                          )
+                        : provider.index == 2
+                            ? Padding(
+                                padding: const EdgeInsets.only(left: 20, right: 20),
+                                child: banglalinkOffer(provider, () {}),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(left: 20, right: 20),
+                                child: robiOffer(provider, () {}),
+                              )
           ]),
         ),
       );
     });
   }
 }
-

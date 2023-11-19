@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:arg_offer/data/model/response/base/error_response.dart';
 import 'package:dio/dio.dart';
 class ApiErrorHandler {
@@ -45,7 +47,7 @@ class ApiErrorHandler {
 
                   break;
                 default:
-                  ErrorResponse errorResponse = ErrorResponse.fromJson(error.response!.data);
+                  ErrorResponse errorResponse = ErrorResponse.fromJson(jsonDecode(error.response!.data));
                   if (errorResponse.error.isNotEmpty) {
                     errorDescription = errorResponse;
                   } else {

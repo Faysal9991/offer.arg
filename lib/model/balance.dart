@@ -9,9 +9,9 @@ Balance balanceFromJson(String str) => Balance.fromJson(json.decode(str));
 String balanceToJson(Balance data) => json.encode(data.toJson());
 
 class Balance {
-    int? totalDeposit;
-    int? totalPurchase;
-    int? totalOrder;
+    String? totalDeposit;
+    String? totalPurchase;
+    String? totalOrder;
     dynamic lastOrder;
 
     Balance({
@@ -22,9 +22,9 @@ class Balance {
     });
 
     factory Balance.fromJson(Map<String, dynamic> json) => Balance(
-        totalDeposit: json["total_deposit"],
-        totalPurchase: json["total_purchase"],
-        totalOrder: json["total_order"],
+        totalDeposit: json["total_deposit"].toString(),
+        totalPurchase: json["total_purchase"].toString(),
+        totalOrder: json["total_order"].toString(),
         lastOrder: json["last_order"],
     );
 
