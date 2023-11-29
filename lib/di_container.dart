@@ -2,10 +2,12 @@
 import 'package:arg_offer/data/dataSource/dio/dio_client.dart';
 import 'package:arg_offer/data/dataSource/dio/logging_interceptor.dart';
 import 'package:arg_offer/data/dataSource/repository/auth_repository.dart';
+import 'package:arg_offer/data/dataSource/repository/game_repositoy.dart';
 import 'package:arg_offer/data/dataSource/repository/home_repository.dart';
 import 'package:arg_offer/data/dataSource/repository/payment_repository.dart';
 import 'package:arg_offer/data/dataSource/repository/splash_repositoy.dart';
 import 'package:arg_offer/provider/auth_provider.dart';
+import 'package:arg_offer/provider/game_provider.dart';
 import 'package:arg_offer/provider/home_page_provider.dart';
 import 'package:arg_offer/provider/navigation_provider.dart';
 import 'package:arg_offer/provider/payment._provider.dart';
@@ -28,6 +30,7 @@ Future<void> init() async {
    sl.registerLazySingleton(() => HomeRepo(dioClient: sl()));
      sl.registerLazySingleton(() => Payment(dioClient: sl()));
   sl.registerLazySingleton(() => AuthRepo(dioClient: sl(),sharedPreferences: sl()));
+   sl.registerLazySingleton(() => GameRepo(dioClient: sl()));
   // bloc
   sl.registerFactory(() => ThemeProvider());
     sl.registerFactory(() => SplashProvider(splashRepository: sl()));
@@ -35,7 +38,7 @@ Future<void> init() async {
     sl.registerFactory(() => NavigationProvider());
      sl.registerFactory(() => HomePageProvider(homeRepo: sl()));
         sl.registerFactory(() => PaymentProvider(payment: sl()));
-
+         sl.registerFactory(() => GameProvider(gameRepo: sl()));
 
 
   // External

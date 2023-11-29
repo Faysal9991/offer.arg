@@ -3,14 +3,6 @@ import 'package:arg_offer/util/theme/app_colors.dart';
 import 'package:arg_offer/util/theme/text.style.dart';
 import 'package:flutter/material.dart';
 
-Widget airtelOffer(HomePageProvider provider,VoidCallback onTap) {
-  return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: provider.airtel.length,
-      itemBuilder: (context, index) {
-        return  ListCardItem(discount: provider.airtel[index].discount.toString(),title:provider.airtel[index].title.toString(), offer: provider.airtel[index].offerPrice.toString(), regularOffer: provider.airtel[index].ragularPrice.toString(), image: "assets/airtel.png", myad: provider.airtel[index].meyad.toString(), onTap: onTap);});
-}
 
 
 
@@ -20,20 +12,20 @@ Widget airtelOffer(HomePageProvider provider,VoidCallback onTap) {
 
 
 class ListCardItem extends StatelessWidget {
- final String title;
- final  String discount;
-   final String offer;
-   final  String regularOffer;
-   final  String myad;
-   final  String image;
+ final String? title;
+ final  String? discount;
+   final String? offer;
+   final  String? regularOffer;
+   final  String? myad;
+   final  String? image;
    final  VoidCallback onTap;
   const ListCardItem({super.key,
-  required this.title,
-  required this.discount,
-  required this.offer,
-  required this.regularOffer,
-  required this.image,
-  required this.myad,
+   this.title,
+ this.discount,
+   this.offer,
+   this.regularOffer,
+   this.image,
+   this.myad,
   required this.onTap
   });
 
@@ -48,17 +40,17 @@ class ListCardItem extends StatelessWidget {
               children: [
                Row(
 children: [
-Expanded(
+image!=null?Expanded(
   flex: 1,
-  child: Image.asset(image)),
+  child: Image.asset(image!)):SizedBox.shrink(),
   const SizedBox(width: 10),
-                  Expanded(
+                 Expanded(
                      flex: 4,
                     child: Column(
                        crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                         Text(title,
+                         Text(title!=null? title!:"",
                                   style: latoStyle500Medium,
                     ),
                     const SizedBox(height: 5,),

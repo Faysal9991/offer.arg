@@ -1,5 +1,8 @@
 import 'package:arg_offer/provider/navigation_provider.dart';
 import 'package:arg_offer/screens/dashboard/home_screen.dart';
+import 'package:arg_offer/screens/game/football.dart';
+import 'package:arg_offer/screens/game/game.dart';
+import 'package:arg_offer/screens/order_list.dart';
 import 'package:arg_offer/screens/payment/add_balance.dart';
 import 'package:arg_offer/util/bottom_navigation/custom_bottom_nev.dart';
 import 'package:arg_offer/util/theme/app_colors.dart';
@@ -16,11 +19,11 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   /// widget list
   final List<Widget> bottomBarPages = [
-    HomeScreen(),
-    Page1(),
-    Page2(),
-    Page3(),
-   AddBalanceScreen(),
+    const HomeScreen(),
+   const MobileGameScreen(),
+    const FootballScreen(),
+    const OrderList(),
+   const AddBalanceScreen(),
   ];
 
   @override

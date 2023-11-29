@@ -10,24 +10,25 @@ import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-class MobileGameScreen extends StatefulWidget {
-  const MobileGameScreen({super.key});
+class FootballScreen extends StatefulWidget {
+  const FootballScreen({super.key});
 
   @override
-  State<MobileGameScreen> createState() => _MobileGameScreenState();
+  State<FootballScreen> createState() => _FootballScreenState();
 }
 
-class _MobileGameScreenState extends State<MobileGameScreen> {
+class _FootballScreenState extends State<FootballScreen> {
   TextEditingController playerId = TextEditingController();
+  TextEditingController gamePassword = TextEditingController();
   List<String> gameItem = [
-  "UniPin",
-  "WeeklyMonthly",
-  "Idcode"
+  "Android",
+  "IOS",
+
   ];
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<GameProvider>(context, listen: false).getGameOffer("UniPin");
+      Provider.of<GameProvider>(context, listen: false).getFootballOffer("A");
       Provider.of<HomePageProvider>(context, listen: false).getBalance();
     });
 
@@ -76,7 +77,7 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                           child: Padding(
                              padding:
                                   const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 15),
-                            child: Text("Gaming Topup" , style: latoStyle700Bold,)
+                            child: Text("Football" , style: latoStyle700Bold,)
                           ),
                         ),
                         Container(
@@ -106,7 +107,7 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                     style: latoStyle700Bold,
                                   ),
                                   Text(
-                                    home.balance.balance??"0",
+                                    "${home.balance.balance??"0"}",
                                     style: latoStyle700Bold,
                                   )
                                 ],
@@ -135,15 +136,20 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      game.getGameOffer(gameItem[index]);
-                                      game.changeIndex(index);
+                                      if(index == 0){
+                                         game.getFootballOffer("A");
+                                      }else{
+                                          game.getFootballOffer("I");
+                                      }
+                                     
+                                      game.changeIndexFootball(index);
                                     },
                                     child: Container(
                                       height: 50,
                                       width: 100,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(5),
-                                          color: game.index == index
+                                          color: game.footballIndex == index
                                               ? AppColors.primaryColorLight
                                               : Colors.white,
                                           border: Border.all(color: AppColors.secondaryColorLight),
@@ -152,7 +158,7 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                           child: Text(
                                         gameItem[index],
                                         style: latoStyle700Bold.copyWith(
-                                            color: game.index == index
+                                            color: game.footballIndex == index
                                                 ? Colors.white
                                                 : Colors.black),
                                       )),
@@ -165,124 +171,20 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                 )
               ],
             ),
-          game.index ==0?ListView.builder(
+          game.footballIndex ==0?ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: game.uniPin.length,
+            itemCount: game.android.length,
             itemBuilder: (context,index){
             return  ListCardItem(
-          title: game.uniPin[index].title!,
-         offer: game.uniPin[index].offerPrice,
+          title: game.android[index].title!,
+         offer: game.android[index].offerPrice,
         
-          regularOffer: game.uniPin[index].ragularPrice,
-      
-          myad: game.uniPin[index].meyad,
-          onTap: (){
-                showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    context: context,
-                                    builder: (context) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(20.0),
-                                          child: Wrap(
-                                            children: [
-                                             Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  game.uniPin[index].location.toString(),
-                                                  style: latoStyle700Bold,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "Buy At ${ game.uniPin[index].offerPrice.toString()}",
-                                                  style: latoStyle700Bold.copyWith(
-                                                      color: Colors.green),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "Your account balance:  ${home.balance.balance}BDT",
-                                                  style: latoStyle700Bold.copyWith(
-                                                      color: Colors.black26),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: TextFormField(
-                                                
-                                                  controller: playerId,
-                                                  decoration: InputDecoration(
-                                                    border: OutlineInputBorder(
-                                                      borderRadius: BorderRadius.circular(25.0),
-                                                      borderSide: const BorderSide(
-                                                        color: Colors.red,
-                                                        width: 1.0,
-                                                      ),
-                                                    ),
-                                                    label: const Text("Player Id"),
-                                                  ),
-                                                ),
-                                              ),
-                                            SizedBox(
-                                                width: double.infinity,
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            AppColors.primaryColorLight),
-                                                    onPressed: () {
-                                                      if( playerId.text.isEmpty){
-                                                         showTopSnackBar(
-                                                              Overlay.of(context),
-                                                              const CustomSnackBar.info(
-                                                                message: "enter correct information",
-                                                              ),
-                                                            );
-                                                      }else{
-                                                             game.buyOffer(
-                                                          id: game.uniPin[index].id.toString(),
-                                                         playerId: playerId.text,
-                                                          callback: (value) {
-                                                            showTopSnackBar(
-                                                              Overlay.of(context),
-                                                              CustomSnackBar.info(
-                                                                message: value,
-                                                              ),
-                                                            );
-                                                          });
-                                                 
-                                                      }
-                                                    },
-                                                    child: const Text("Buy Now")),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                               
-          },
-        ); 
-          }):game.index ==1?ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: game.weeklyMonthly.length,
-            itemBuilder: (context,index){
-            return  ListCardItem(
-          title: game.weeklyMonthly[index].title!,
-         offer: game.weeklyMonthly[index].offerPrice,
-        
-          regularOffer: game.weeklyMonthly[index].ragularPrice,
+          regularOffer: game.android[index].ragularPrice,
        
-          myad: game.weeklyMonthly[index].meyad,
+          myad: game.android[index].meyad,
           onTap: (){
-                   showModalBottomSheet(
+                         showModalBottomSheet(
                                     isScrollControlled: true,
                                     context: context,
                                     builder: (context) {
@@ -293,18 +195,18 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                           padding: const EdgeInsets.all(20.0),
                                           child: Wrap(
                                             children: [
-                                            
+                                             
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Text(
-                                                  game.weeklyMonthly[index].location.toString(),
+                                                  game.android[index].location.toString(),
                                                   style: latoStyle700Bold,
                                                 ),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Text(
-                                                  "Buy At ${ game.weeklyMonthly[index].offerPrice.toString()}",
+                                                  "Buy At ${ game.android[index].offerPrice.toString()}",
                                                   style: latoStyle700Bold.copyWith(
                                                       color: Colors.green),
                                                 ),
@@ -334,6 +236,23 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                                   ),
                                                 ),
                                               ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: TextFormField(
+                                                
+                                                  controller: gamePassword,
+                                                  decoration: InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.circular(25.0),
+                                                      borderSide: const BorderSide(
+                                                        color: Colors.red,
+                                                        width: 1.0,
+                                                      ),
+                                                    ),
+                                                    label: const Text("Game Password"),
+                                                  ),
+                                                ),
+                                              ),
                                             SizedBox(
                                                 width: double.infinity,
                                                 child: ElevatedButton(
@@ -341,7 +260,7 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                                         backgroundColor:
                                                             AppColors.primaryColorLight),
                                                     onPressed: () {
-                                                      if( playerId.text.isEmpty){
+                                                      if( playerId.text.isEmpty|| gamePassword.text.isEmpty){
                                                          showTopSnackBar(
                                                               Overlay.of(context),
                                                               const CustomSnackBar.info(
@@ -349,8 +268,9 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                                               ),
                                                             );
                                                       }else{
-                                                             game.buyOffer(
-                                                          id: game.weeklyMonthly[index].id.toString(),
+                                                             game.buyFootball(
+                                                          id: game.idcode[index].id.toString(),
+                                                          gamePassword: gamePassword.text,
                                                          playerId: playerId.text,
                                                           callback: (value) {
                                                             showTopSnackBar(
@@ -374,20 +294,20 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
             
           },
         ); 
-          }):game.index ==2?ListView.builder(
+          }):game.footballIndex ==1?ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: game.idcode.length,
+            itemCount: game.ios.length,
             itemBuilder: (context,index){
             return  ListCardItem(
-          title: game.idcode[index].title!,
-         offer: game.idcode[index].offerPrice,
+          title: game.ios[index].title!,
+         offer: game.ios[index].offerPrice,
         
-          regularOffer: game.idcode[index].ragularPrice,
+          regularOffer: game.ios[index].ragularPrice,
        
-          myad: game.idcode[index].meyad,
+          myad: game.ios[index].meyad,
           onTap: (){
-                      showModalBottomSheet(
+                       showModalBottomSheet(
                                     isScrollControlled: true,
                                     context: context,
                                     builder: (context) {
@@ -401,21 +321,14 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Text(
-                                                  "শুধুমাত্র Bangladesh সার্ভারে ID Code দিয়ে টপ আপ হবে। Player ID Code ভুল দিয়ে Diamond না পেলে arg offer কর্তৃপক্ষ দায়ী নয়।",
+                                                  game.ios[index].location.toString(),
                                                   style: latoStyle700Bold,
                                                 ),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Text(
-                                                  game.idcode[index].location.toString(),
-                                                  style: latoStyle700Bold,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "Buy At ${ game.idcode[index].offerPrice.toString()}",
+                                                  "Buy At ${ game.ios[index].offerPrice.toString()}",
                                                   style: latoStyle700Bold.copyWith(
                                                       color: Colors.green),
                                                 ),
@@ -445,6 +358,23 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                                   ),
                                                 ),
                                               ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: TextFormField(
+                                                
+                                                  controller: gamePassword,
+                                                  decoration: InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.circular(25.0),
+                                                      borderSide: const BorderSide(
+                                                        color: Colors.red,
+                                                        width: 1.0,
+                                                      ),
+                                                    ),
+                                                    label: const Text("Game password"),
+                                                  ),
+                                                ),
+                                              ),
                                             SizedBox(
                                                 width: double.infinity,
                                                 child: ElevatedButton(
@@ -452,16 +382,17 @@ class _MobileGameScreenState extends State<MobileGameScreen> {
                                                         backgroundColor:
                                                             AppColors.primaryColorLight),
                                                     onPressed: () {
-                                                      if( playerId.text.isEmpty){
+                                                      if( playerId.text.isEmpty|| gamePassword.text.isEmpty){
                                                          showTopSnackBar(
                                                               Overlay.of(context),
-                                                              const CustomSnackBar.info(
+                                                              const CustomSnackBar.error(
                                                                 message: "enter correct information",
                                                               ),
                                                             );
                                                       }else{
-                                                             game.buyOffer(
-                                                          id: game.idcode[index].id.toString(),
+                                                             game.buyFootball(
+                                                          id: game.ios[index].id.toString(),
+                                                          gamePassword: gamePassword.text,
                                                          playerId: playerId.text,
                                                           callback: (value) {
                                                             showTopSnackBar(

@@ -1,10 +1,10 @@
 import 'package:arg_offer/provider/auth_provider.dart';
+import 'package:arg_offer/provider/game_provider.dart';
 import 'package:arg_offer/provider/home_page_provider.dart';
 import 'package:arg_offer/provider/navigation_provider.dart';
 import 'package:arg_offer/provider/payment._provider.dart';
 import 'package:arg_offer/provider/spalsh_providder.dart';
 import 'package:arg_offer/provider/theme_provider.dart';
-import 'package:arg_offer/screens/landing_screen.dart';
 import 'package:arg_offer/splash_screen.dart';
 import 'package:arg_offer/util/theme/app_theme.dart';
 import 'package:flutter/gestures.dart';
@@ -27,6 +27,7 @@ void main() async {
  ChangeNotifierProvider(create: (context) => di.sl<NavigationProvider>()),
   ChangeNotifierProvider(create: (context) => di.sl<HomePageProvider>()),
    ChangeNotifierProvider(create: (context) => di.sl<PaymentProvider>()),
+   ChangeNotifierProvider(create: (context) => di.sl<GameProvider>()),
     ],
     child: const MyApp(),
   ) )
@@ -52,7 +53,6 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child)
       { return MaterialApp(
-          title: 'Help Adobe',
           theme:  AppTheme.getLightModeTheme(),
           debugShowCheckedModeBanner: false,
           scrollBehavior: const MaterialScrollBehavior().copyWith(dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch}),
